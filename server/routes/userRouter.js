@@ -40,6 +40,7 @@ userRouter.post("/login", async (req, res) => {
             res.status(200).send({"msg": "No user found"});
         }
     } catch (error) {
+        console.log(error);
         res.status(400).send({"err": error});
     }
 })
