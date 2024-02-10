@@ -3,9 +3,14 @@ const { connection } = require("./config/db");
 const { userRouter } = require("./routes/userRouter");
 const { postRouter } = require("./routes/postRouter");
 const dotenv = require("dotenv").config();
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT;
+
+app.use(cors({
+    origin: "*"
+}));
 
 app.use(express.json());
 
