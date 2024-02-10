@@ -4,7 +4,7 @@ export const AuthContext = createContext();
 
 export default function AuthContextProvider({children}){
     const [number, setNumber] = useState(0);
-    const [isAuth, setAuth] = useState(true);
+    const [isAuth, setAuth] = useState(false);
 
     return (
         <AuthContext.Provider value={{isAuth, setAuth, number, setNumber}}>
