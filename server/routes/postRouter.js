@@ -8,7 +8,7 @@ postRouter.post("/add", auth, async (req, res) => {
     try {
         const post = new PostModel(req.body);
         await post.save();
-        res.status(200).send({"msg": "post has been saved"});
+        res.status(200).send({"msg": "post has been saved", "success": true});
     } catch (error) {
         res.status(400).send({"error": error});
     }

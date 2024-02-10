@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { submitUserDetails } from "./submitUserDetails";
+import { AuthContext } from "../../context/AuthContextProvider"
 
 const Login = () => {
+    const {setAuth} = useContext(AuthContext);
     const Navigate = useNavigate();
     const [userDetails, setUserDetails] = useState({
         email: "",
@@ -16,10 +19,25 @@ const Login = () => {
         })
     }
 
-    console.log(userDetails);
+    const handleSubmit = async () => {
 
-    const handleSubmit = () => {
-        console.log(" submit");
+        if(userDetails){
+            try {
+                const result = await submitUserDetails(userDetails);
+                if(result.token){
+                    setAuth(true)
+                    alert("User has been logged in successfully");
+                    Navigate("/");
+                }else{
+                    alert("Wrong Password!");
+                }
+            } catch (error) {
+                console.log(error);
+                alert(error);
+            }
+        }else{
+            alert("Fill all the details")
+        }
     }
 
     return (
