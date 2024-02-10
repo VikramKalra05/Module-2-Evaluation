@@ -1,6 +1,7 @@
 const express = require("express");
 const { connection } = require("./config/db");
 const { userRouter } = require("./routes/userRouter");
+const { postRouter } = require("./routes/postRouter");
 const dotenv = require("dotenv").config();
 
 const app = express();
@@ -9,6 +10,7 @@ const PORT = process.env.PORT;
 app.use(express.json());
 
 app.use("/users", userRouter);
+app.use("/posts", postRouter)
 
 app.get("/", (req, res) => {
     res.send("Home Page")
