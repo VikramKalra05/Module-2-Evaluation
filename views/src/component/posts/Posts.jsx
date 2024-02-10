@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { Navigate } from "react-router-dom";
-import { getPosts } from "./submitRequest";
+import { getPostss } from "./submitRequest.js";
 
 const Posts = () => {
-    const {isAuth} = useContext(AuthContext);
+    const {isAuth, setNumber} = useContext(AuthContext);
     const [posts, setPosts] = useState([]);
-    const {postEditToggle, setEditPostToggle} = useState(false);
+    const [postEditToggle, setEditPostToggle] = useState(false);
     const [postDetails, setPostDetails] = useState({
         title: "",
         body: "",
@@ -23,10 +23,11 @@ const Posts = () => {
 
     const getPosts = async () => {
         try {
-            const result = await getPosts();
+            const result = await getPostss();
             console.log(result);
             if(result.posts){
                 setPosts(result.posts);
+                setNumber(result.posts.length)
             }
         } catch (error) {
             console.log(error);
@@ -87,7 +88,7 @@ const Posts = () => {
                 const res = await response.json()
                 console.log(res);
     
-                if(res.success){
+                if(res.msg === "post has been saved"){
                     alert("New post has been created");
                 }
                 getPosts();
@@ -126,6 +127,7 @@ const Posts = () => {
     return (
         <div>
             <h1>Post Page</h1>
+            <button onClick={() => setEditPostToggle(!postEditToggle)}>Edit Post</button>
             <div>
                 <h2>Write a new post below</h2>
                 <h5>Title</h5>
@@ -176,6 +178,7 @@ const EditBlock = ({post, submitPostChanges}) => {
 
     return (
         <div>
+                <h1>Edit post {post._id}</h1>
                 <h5>Title</h5>
                 <input type="text" name="title" value={postDetails.title} onChange={(e)=>handleChange(e)}/>
                 <br />

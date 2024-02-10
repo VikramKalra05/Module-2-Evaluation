@@ -1,4 +1,4 @@
-export const getPosts = async () => {
+export const getPostss = async () => {
     
     try {
         const response = await fetch("https://gentle-fawn-shrug.cyclic.app/posts/", {
